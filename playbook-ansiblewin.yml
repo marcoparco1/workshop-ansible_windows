@@ -2,7 +2,7 @@
 - name: install the iis web service
   hosts: windows
   gather_facts: false
-  ansible_become: true
+  become: true
   
   task:
   - name: Show hostname
