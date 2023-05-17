@@ -2,7 +2,7 @@
 - hosts: windows
   name: Prueba
   become: true
-  ansible_become: false
+  gather_facts: false
   
   tasks:
     - name: Show hostname
