@@ -1,7 +1,6 @@
 ---
-- name: install the iis web service
+- name: Prueba
   hosts: windows
-  gather_facts: false
   become: true
   
   task:
