@@ -20,7 +20,7 @@
         enabled: yes
         
     - name: Verificar si esta instalado Firewall
-      ansible.windows.win_feature:
+      ansible.windows.win_service:
         name: W3Svc
-        state: present
+        state: started
         
