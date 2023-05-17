@@ -7,6 +7,7 @@
   tasks:
     - name: Show hostname
       debug:
+        gather_facts: false
         msg: "Hostname: {{ ansible_hostname }} "
         
     - name: run the setup facts
