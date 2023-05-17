@@ -1,14 +1,14 @@
 ---
 - hosts: windows
   name: Prueba
-  become: true
+  become: false
   gather_facts: true
   
   tasks:
-    #- name: Show hostname
-      #debug:
-        #var: ansible_hostname
-        #msg: "Hostname: {{ ansible_hostname }} "
+    - name: Show hostname
+      debug:
+        var: ansible_hostname
+        msg: "Hostname: {{ ansible_hostname }} "
         
     - name: run the setup facts
       ansible.builtin.setup:
