@@ -1,0 +1,14 @@
+---
+- name: install the iis web service
+  hosts: windows
+  gather_facts: false
+  ansible_become: true
+  
+  task:
+  - name: Show hostname
+    debug:
+      ansible_become: true
+      msg: "Hostname: {{ ansible_hostname }} "
+  - name: run the setup facts
+    ansible.builtin.setup:
+        
