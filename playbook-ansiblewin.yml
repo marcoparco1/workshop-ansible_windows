@@ -28,7 +28,16 @@
       ansible.windows.win_service:
         name: W3Svc
         state: started
-    
+        
+    - name: Open port for site on the firewall
+      win_firewall_rule:
+        name: "iisport{{ 8080 }}"
+        enable: yes
+        state: present
+        localport: "{{ 8080 }}"
+        action: Allow
+        direction: In
+        protocol: Tcp
       
     - name: Create directory structure
       ansible.windows.win_file:
