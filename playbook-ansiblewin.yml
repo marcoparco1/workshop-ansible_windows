@@ -19,7 +19,12 @@
         state: present
         enabled: yes
         
-    - name: Verificar si esta instalado Firewall
+    - name: Install IIS
+      win_feature:
+        name: Web-Server
+        state: present
+        
+    - name: Verificar si esta instalado W3Svc
       ansible.windows.win_service:
         name: W3Svc
         state: started
