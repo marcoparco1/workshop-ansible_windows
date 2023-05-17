@@ -15,8 +15,11 @@
         
     - name: Verificar si esta instalado Firewall
       ansible.windows.win_feature:
-        name: 
-        - Firewall
-        - W3Svc
+        name: Firewall
+        state: present
+        
+    - name: Verificar si esta instalado Firewall
+      ansible.windows.win_feature:
+        name: W3Svc
         state: present
         
