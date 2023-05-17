@@ -2,12 +2,13 @@
 - hosts: windows
   name: Prueba
   become: true
+  ansible_become: false
   
   tasks:
     - name: Show hostname
       debug:
-        ansible_become: true
         msg: "Hostname: {{ ansible_hostname }} "
+        
     - name: run the setup facts
       ansible.builtin.setup:
         
