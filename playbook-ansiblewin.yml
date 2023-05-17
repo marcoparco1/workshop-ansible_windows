@@ -2,12 +2,11 @@
 - hosts: windows
   name: Prueba
   become: true
-  gather_facts: false
+  gather_facts: true
   
   tasks:
     - name: Show hostname
       debug:
-        gather_facts: false
         msg: "Hostname: {{ ansible_hostname }} "
         
     - name: run the setup facts
