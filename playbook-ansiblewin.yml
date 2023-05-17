@@ -1,18 +1,20 @@
 ---
+# Escriba la definición de su playbook, los hosts sobre los que se ejecutará, que realice escalamiento de privilegios y que no obtenga facts.
 - hosts: windows
   name: Prueba
   become: false
   gather_facts: true
   
   tasks:
+  #Obtenga el hostname de la máquina sobre la que esta ejecutando el playbook e imprima en pantalla el resultado
     - name: Show hostname
       debug:
         msg: " Hostname: {{ ansible_hostname }} "
-        
+  #Obtenga la versión de windows e imprima el resultado en pantalla   
     - name: Version Windows
       debug:
         msg: " OS version: {{ ansible_os_name }} "    
-        
+  #Asegúrese de que los servicios Firewall y W3Svc se encuentren instalados y activos      
     - name: Verificar si esta instalado Firewall
       community.windows.win_firewall_rule:
         name: firewalld
@@ -28,7 +30,7 @@
       ansible.windows.win_service:
         name: W3Svc
         state: started
-        
+  #Habilite el servicio W3Svc en el Firewall      
     - name: Open port for site on the firewall
       win_firewall_rule:
         name: "iisport{{ 8080 }}"
@@ -38,34 +40,42 @@
         action: Allow
         direction: In
         protocol: Tcp
-      
+  
+ #Cree el directorio /tmp/reto1    
     - name: Create directory structure
       ansible.windows.win_file:
         path: C:\Temp\reto1
         state: directory
         
+ #Cree el archivo reto1_content en el directorio creado en el paso anterior     
     - name: Touch a file (creates if not present, updates modification time if present)
       ansible.windows.win_file:
         path: C:\Temp\reto1\reto1_content
         state: touch
         
+ #Imprima en el archivo reto1_content la versión de windows del servidor
+      
     - name: Set the contents of a file
       ansible.windows.win_copy:
         content: " OS version: {{ ansible_os_name }} " 
         dest: C:\Temp\reto1\reto1_content
     
+  #Actualice todos los paquetes del servidor
     - name: Install all updates and reboot as many times as needed
       ansible.windows.win_updates:
         category_names: '*'
-        
+   
+  #Reinicie el servidor
+  
     - name: Reboot the machine with all defaults
       ansible.windows.win_reboot:
-    
+      
+  #Cambie el hostname de la máquina  
     - name: Change the hostname to marcoparco
       ansible.windows.win_hostname:
         name: marcoparco
       register: res
-      
+  #Tome un backup del archivo reto1_content, y proceda a agregar el texto "ESTA ES UNA PRUEBA", es importante que el contenido previo del archivo NO SE BORRE.
     - name: Copy a single file, but keep a backup
       ansible.windows.win_copy:
         src: C:\Temp\reto1\reto1_content
@@ -80,6 +90,7 @@
         line: ESTA ES UNA PRUEBA
         newline: unix
         
+   #Cambie la primera línea (que contiene la versión de windows) del archivo reto1_content por el texto "ANSIBLE CON WINDOWS"     
     - name: Add a line to a file and ensure the resulting file uses unix line separators
       community.windows.win_lineinfile:
         path: C:\Temp\reto1\reto1_content
