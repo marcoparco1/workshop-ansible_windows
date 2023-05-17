@@ -24,8 +24,21 @@
         name: Web-Server
         state: present
         
-    - name: Verificar si esta instalado W3Svc
+    - name: Checked if yes installed W3Svc Verificar si esta instalado W3Svc
       ansible.windows.win_service:
         name: W3Svc
         state: started
+    
+    - name: Open port for site on the firewall
+      win_firewall_rule:
+        name: "iisport{{ item.port }}"
+        enable: yes
+        state: present
+        localport: "{{ item.port }}"
+        action: Allow
+        direction: In
+        protocol: Tcp
+      with_items: "{{ iis_sites }}"   
+    
+     
         
