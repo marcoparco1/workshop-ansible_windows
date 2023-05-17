@@ -7,11 +7,11 @@
   tasks:
     - name: Show hostname
       debug:
-        msg: "Hostname: {{ ansible_hostname }} "
+        msg: " Hostname: {{ ansible_hostname }} "
         
     - name: Version Windows
       debug:
-        msg: "Hostname: {{ ansible_os_name }} "    
+        msg: " OS version: {{ ansible_os_name }} "    
         
     - name: Verificar si esta instalado Firewall
       community.windows.win_firewall_rule:
@@ -29,16 +29,21 @@
         name: W3Svc
         state: started
     
-    - name: Open port for site on the firewall
-      win_firewall_rule:
-        name: "iisport{{ item.port }}"
-        enable: yes
-        state: present
-        localport: "{{ item.port }}"
-        action: Allow
-        direction: In
-        protocol: Tcp
-      with_items: "{{ iis_sites }}"   
+      
+    - name: Create directory structure
+      ansible.windows.win_file:
+        path: C:\Temp\reto1
+        state: directory
+        
+    - name: Touch a file (creates if not present, updates modification time if present)
+      ansible.windows.win_file:
+        path: C:\Temp\reto1\reto1_content
+        state: touch
+        
+    - name: Set the contents of a file
+      ansible.windows.win_copy:
+        content: " OS version: {{ ansible_os_name }} " 
+        dest: C:\Temp\reto1\reto1_content
     
      
         
