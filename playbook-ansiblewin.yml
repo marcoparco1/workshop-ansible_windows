@@ -4,11 +4,11 @@
   become: true
   gather_facts: true
   
-  tasks:
-    - name: Show hostname
-      debug:
-        var: ansible_hostname
-        msg: "Hostname: {{ ansible_hostname }} "
+  #tasks:
+    #- name: Show hostname
+      #debug:
+        #var: ansible_hostname
+        #msg: "Hostname: {{ ansible_hostname }} "
         
     - name: run the setup facts
       ansible.builtin.setup:
