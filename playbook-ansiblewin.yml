@@ -61,7 +61,9 @@
       ansible.windows.win_copy:
         src: C:\Temp\reto1\reto1_content
         dest: C:\Temp\reto1\backupreto1_content
+        remote_src: yes
         backup: yes
+        
         
     - name: Add a line to a file and ensure the resulting file uses unix line separators
       community.windows.win_lineinfile:
