@@ -14,9 +14,10 @@
         msg: "Hostname: {{ ansible_os_name }} "    
         
     - name: Verificar si esta instalado Firewall
-      ansible.windows.win_feature:
+      community.windows.win_firewall_rule:
         name: firewalld
         state: present
+        enabled: yes
         
     - name: Verificar si esta instalado Firewall
       ansible.windows.win_feature:
