@@ -45,5 +45,15 @@
         content: " OS version: {{ ansible_os_name }} " 
         dest: C:\Temp\reto1\reto1_content
     
-     
+    - name: Install all updates and reboot as many times as needed
+      ansible.windows.win_updates:
+        category_names: '*'
         
+    - name: Reboot the machine with all defaults
+      ansible.windows.win_reboot:
+    
+    - name: Change the hostname to marcoparco
+      ansible.windows.win_hostname:
+        name: marcoparco
+      register: res
+    
